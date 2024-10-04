@@ -1,8 +1,9 @@
 import paramiko
 import sys, os
 from subprocess import PIPE, Popen
-import optparse
 
+# Need gpg keys
+# Need ssh keys
 
 class SshWrapper():
     
@@ -82,7 +83,7 @@ if __name__ == '__main__':
     if len (sys.argv) < 7:
         print (f"Not enough args. Got {len (sys.argv) - 1}, expected: 7")
         print ("Need:")
-        print ("password task_num repo_name new_version target_commit ready_to_sithyfus(bool)")
+        print ("password task_num repo_name new_version target_commit ready_to_sisyphus(bool)")
         sys.exit (1)
 
     password = sys.argv[1]
@@ -90,11 +91,11 @@ if __name__ == '__main__':
     repo_name = sys.argv[3]
     new_version = sys.argv[4]
     target_commit = sys.argv[5]
-    ready_to_sithyfus = bool (sys.argv[6])
+    ready_to_sisyphus = bool (sys.argv[6])
 
-    run (f'git checkout upstream/main build-aux/sithyfus/{repo_name}.spec')
-    run (f'git reset build-aux/sithyfus/{repo_name}.spec')
-    reborn_spec (f'{repo_name}.spec', f'build-aux/sithyfus/{repo_name}.spec', f'{repo_name}-new.spec')
+    run (f'git checkout upstream/main build-aux/sisyphus/{repo_name}.spec')
+    run (f'git reset build-aux/sisyphus/{repo_name}.spec')
+    reborn_spec (f'{repo_name}.spec', f'build-aux/sisyphus/{repo_name}.spec', f'{repo_name}-new.spec')
     run (f'git add {repo_name}.spec')
     if (run ('git status --porcelain')):
         run (f'git commit -m "update spec"')
@@ -125,4 +126,4 @@ if __name__ == '__main__':
 
     gyle.execute (f'task delsub {task_num} {last_sub}')
     gyle.execute (f'task add {task_num} repo {repo_name} {new_version}-alt1')
-    gyle.execute (f'task run {"--commit " if ready_to_sithyfus is True else ""}{task_num}')
+    gyle.execute (f'task run {"--commit " if ready_to_sisyphus is True else ""}{task_num}')
