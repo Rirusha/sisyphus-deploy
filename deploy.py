@@ -59,20 +59,20 @@ def reborn_spec (old_spec_path:str, template_spec_path:str, new_spec_path:str):
             # elif line.startswith ('Epoch:'):
             #     epoch = line.lstrip ('Epoch:').strip ()
             elif '%changelog' in line:
-                changelog.append (line.strip ())
+                changelog.append (line)
 
     with open (new_spec_path, 'w') as new_f:
         with open (template_spec_path, 'r') as tmplt_f:
             for line in tmplt_f.readlines ():
                 if line.startswith ('Version:'):
-                    new_f.write ([f'Version: {version}\n'])
+                    new_f.write (f'Version: {version}\n')
                 elif line.startswith ('Release:'):
-                    new_f.write ([f'Release: {release}\n'])
+                    new_f.write (f'Release: {release}\n')
                 else:
                     new_f.write (line)
             
         for chlog in changelog:
-            new_f.write (f'{chlog}\n')
+            new_f.write (chlog)
 
     os.remove (old_spec_path)
     os.remove (template_spec_path)
